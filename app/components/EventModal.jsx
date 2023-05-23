@@ -8,16 +8,17 @@ import {
   MdCheck,
   MdDeleteOutline,
 } from "react-icons/md";
+
 import GlobalContext from "../context/GlobalContext";
 
 export default function EventModal() {
   const labelClasses = [
-    "bg-indigo-500",
-    "bg-gray-500",
-    "bg-green-500",
-    "bg-red-500",
-    "bg-blue-500",
-    "bg-purple-500",
+    "indigo",
+    "gray",
+    "green",
+    "red",
+    "blue",
+    "purple",
   ];
   const { setShowModal, daySelected, dispatchCalEvent, selectedEvent } =
     useContext(GlobalContext);
@@ -110,7 +111,7 @@ export default function EventModal() {
                 <span
                   key={index}
                   onClick={() => setSelectedLabel(labelClass)}
-                  className={`${labelClass} flex h-6 w-6 cursor-pointer items-center justify-center rounded-full`}
+                  className={`bg-${labelClass}-500 flex h-6 w-6 cursor-pointer items-center justify-center rounded-full`}
                 >
                   {selectedLabel === labelClass && (
                     <span className="text-sm text-white">
