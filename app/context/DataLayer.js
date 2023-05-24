@@ -50,9 +50,9 @@ export default function DataLayer(props) {
   }, []);
 
   const fetchEvents = async () => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAppointments`);
-    const data = await response.json();
-    return data;
+    // const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAppointments`);
+    // const data = await response.json();
+    // return data;
   };
 
   const filteredEvents = useMemo(() => {
