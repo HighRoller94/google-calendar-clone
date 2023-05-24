@@ -41,12 +41,12 @@ export default function DataLayer(props) {
   );
 
   useEffect(() => {
-    const getEvents = async () => {
-      const appointments = await fetchEvents();
-      setAppointments(appointments);
-    };
+    // const getEvents = async () => {
+    //   const appointments = await fetchEvents();
+    //   setAppointments(appointments);
+    // };
 
-    getEvents();
+    // getEvents();
   }, []);
 
   const fetchEvents = async () => {
@@ -56,12 +56,12 @@ export default function DataLayer(props) {
   };
 
   const filteredEvents = useMemo(() => {
-    return savedEvents.filter((event) =>
-      labels
-        .filter((lbl) => lbl.checked)
-        .map((lbl) => lbl.label)
-        .includes(event.label)
-    );
+    // return savedEvents.filter((event) =>
+    //   labels
+    //     .filter((lbl) => lbl.checked)
+    //     .map((lbl) => lbl.label)
+    //     .includes(event.label)
+    // );
   }, [savedEvents, labels]);
 
   useEffect(() => {
@@ -75,34 +75,34 @@ export default function DataLayer(props) {
   }, [savedEvents]);
 
   useEffect(() => {
-    setTypes((prevTypes) => {
-      return [...new Set(appointments.map((app) => app.type))].map(
-        (type) => {
-        const currentType = prevTypes.find(
-          (prevType) => prevType.type === type
-        );
-        return {
-          type,
-          checked: currentType ? currentType.checked : true,
-        };
-      });
-    });
+    // setTypes((prevTypes) => {
+    //   return [...new Set(appointments.map((app) => app.type))].map(
+    //     (type) => {
+    //     const currentType = prevTypes.find(
+    //       (prevType) => prevType.type === type
+    //     );
+    //     return {
+    //       type,
+    //       checked: currentType ? currentType.checked : true,
+    //     };
+    //   });
+    // });
   }, [appointments]);
 
   useEffect(() => {
-    setLabels((prevLabels) => {
-      return [...new Set(savedEvents.map((event) => event.label))].map(
-        (label) => {
-          const currentLabel = prevLabels.find(
-            (prevLabel) => prevLabel.label === label
-          );
-          return {
-            label,
-            checked: currentLabel ? currentLabel.checked : true,
-          };
-        }
-      );
-    });
+    // setLabels((prevLabels) => {
+    //   return [...new Set(savedEvents.map((event) => event.label))].map(
+    //     (label) => {
+    //       const currentLabel = prevLabels.find(
+    //         (prevLabel) => prevLabel.label === label
+    //       );
+    //       return {
+    //         label,
+    //         checked: currentLabel ? currentLabel.checked : true,
+    //       };
+    //     }
+    //   );
+    // });
   }, [savedEvents]);
 
   useEffect(() => {
