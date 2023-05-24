@@ -31,12 +31,29 @@ export default function DataLayer(props) {
   const [daySelected, setDaySelected] = useState(dayjs());
   const [showModal, setShowModal] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [types, setTypes] = useState([]);
   const [labels, setLabels] = useState([]);
+  const [appointments, setAppointments] = useState([]);
   const [savedEvents, dispatchCalEvent] = useReducer(
     savedEventsReducer,
     [],
     initEvents
   );
+
+  useEffect(() => {
+    const getEvents = async () => {
+      const appointments = await fetchEvents();
+      setAppointments(appointments);
+    };
+
+    getEvents();
+  }, []);
+
+  const fetchEvents = async () => {
+    const response = await fetch("http://localhost:3000/api/getAppointments");
+    const data = await response.json();
+    return data;
+  };
 
   const filteredEvents = useMemo(() => {
     return savedEvents.filter((event) =>
@@ -51,11 +68,26 @@ export default function DataLayer(props) {
     if (!showModal) {
       setSelectedEvent(null);
     }
-  }, [showModal])
+  }, [showModal]);
 
   useEffect(() => {
     localStorage.setItem("savedEvents", JSON.stringify(savedEvents));
   }, [savedEvents]);
+
+  useEffect(() => {
+    setTypes((prevTypes) => {
+      return [...new Set(appointments.map((app) => app.type))].map(
+        (type) => {
+        const currentType = prevTypes.find(
+          (prevType) => prevType.type === type
+        );
+        return {
+          type,
+          checked: currentType ? currentType.checked : true,
+        };
+      });
+    });
+  }, [appointments]);
 
   useEffect(() => {
     setLabels((prevLabels) => {
@@ -83,6 +115,10 @@ export default function DataLayer(props) {
     setLabels(labels.map((lbl) => (lbl.label === label.label ? label : lbl)));
   }
 
+  function updateTypes(type) {
+    setTypes(types.map((appType) => (appType.type === type.type ? type : appType)));
+  }
+
   return (
     <GlobalContext.Provider
       value={{
@@ -101,7 +137,11 @@ export default function DataLayer(props) {
         setLabels,
         labels,
         updateLabels,
+        setTypes,
+        types,
+        updateTypes,
         filteredEvents,
+        appointments,
       }}
     >
       {props.children}

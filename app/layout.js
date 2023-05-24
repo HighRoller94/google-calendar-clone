@@ -1,20 +1,21 @@
 'use client'
 
 import './globals.css'
-import { openSans, inter } from '@/util/fonts'
 import DataLayer from './context/DataLayer'
-import AddEventModal from './components/EventModal';
-import { useContext, useState } from 'react';
-import GlobalContext from './context/GlobalContext';
 import { ThemeProvider } from 'next-themes';
 
+export const metadata = {
+  title: 'NextJS Calendar',
+  description: 'Simple calendar app built with NextJS',
+}
+
 export default function RootLayout({ children }) {
-  const { showModal } = useContext(GlobalContext)
+
   return (
     <html lang="en">
       <DataLayer>
         <ThemeProvider enableSystem={true} attribute='class'>
-          <body className={inter.className}>
+          <body>
             {children}
           </body>
         </ThemeProvider>

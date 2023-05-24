@@ -5,7 +5,7 @@ import Labels from "./Labels";
 
 export default function Sidebar() {
   return (
-    <aside className="border p-5 w-64">
+    <aside className="border border-white-200 dark:border-slate-600 p-5 w-64">
       <CreateEventButton />
       <SmallCalendar /> 
       <Labels />

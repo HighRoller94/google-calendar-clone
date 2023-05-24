@@ -1,4 +1,4 @@
-import { getMonth } from "@/util/util";
+import { getMonth } from '../../util/util'
 import dayjs from "dayjs";
 import React, { useContext, useEffect, useState } from "react";
 import { BiChevronRight, BiChevronLeft } from "react-icons/bi";
@@ -43,8 +43,8 @@ export default function SmallCalendar() {
 
   return (
     <div className="mt-9">
-      <header className="flex justify-between">
-        <p className="p text-gray-500 font-bold">
+      <header className="flex justify-between mb-2">
+        <p className="p text-gray-500 font-semibold">
           {dayjs(new Date(dayjs().year(), currentMonthIndex)).format(
             "MMMM YYYY"
           )}
@@ -64,7 +64,7 @@ export default function SmallCalendar() {
       </header>
       <div className="div grid grid-cols-7 grid-rows-6">
         {currentMonth[0].map((day, i) => (
-          <span key={i} className="text-sm py-1 text-center">
+          <span key={i} className="text-sm py-1 text-center font-bold text-gray-500 dark:text-gray-100">
             {day.format("dd").charAt(0)}
           </span>
         ))}

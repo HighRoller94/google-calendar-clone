@@ -10,19 +10,23 @@ import {
 } from "react-icons/md";
 
 import GlobalContext from "../context/GlobalContext";
+import { createPost } from "../../sanity";
 
 export default function EventModal() {
   const labelClasses = [
-    "indigo",
-    "gray",
-    "green",
-    "red",
-    "blue",
-    "purple",
+    "bg-indigo-400",
+    "bg-gray-400", 
+    "bg-green-400",
+    "bg-red-400",
+    "bg-blue-400",
+    "bg-purple-400",
   ];
+
+
+
   const { setShowModal, daySelected, dispatchCalEvent, selectedEvent } =
     useContext(GlobalContext);
-  const [title, setTitle] = useState(selectedEvent ? selectedEvent.title : "");
+  const [name, setName] = useState(selectedEvent ? selectedEvent.setName : "");
   const [description, setDescription] = useState(
     selectedEvent ? selectedEvent.description : ""
   );
@@ -32,7 +36,19 @@ export default function EventModal() {
       : labelClasses[0]
   );
 
-  function handleSubmit(e) {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const postData = {
+      _type: "appointments",
+      name: name,
+      date: daySelected,
+    }
+    createPost(postData)
+    setShowModal(false);
+  }
+
+
+  function handleSubmitd(e) {
     e.preventDefault();
     const calendarEvent = {
       title,
@@ -80,10 +96,10 @@ export default function EventModal() {
             <div></div>
             <input
               type="text"
-              name="title"
-              placeholder="Add Event Title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              name="name"
+              placeholder="Add Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               required
               className="w-full border-0 border-b-2 border-gray-200 pb-2 pt-3 text-xl font-semibold text-gray-600 focus:border-blue-500 focus:outline-none focus:ring-0"
             />
@@ -111,7 +127,7 @@ export default function EventModal() {
                 <span
                   key={index}
                   onClick={() => setSelectedLabel(labelClass)}
-                  className={`bg-${labelClass}-500 flex h-6 w-6 cursor-pointer items-center justify-center rounded-full`}
+                  className={`${labelClass} flex h-6 w-6 cursor-pointer items-center justify-center rounded-full`}
                 >
                   {selectedLabel === labelClass && (
                     <span className="text-sm text-white">
