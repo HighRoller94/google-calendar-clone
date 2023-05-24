@@ -52,16 +52,17 @@ export default function DataLayer(props) {
   const fetchEvents = async () => {
     const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getAppointments`);
     const data = await response.json();
+    console.log(data)
     return data;
   };
 
   const filteredEvents = useMemo(() => {
-    return savedEvents.filter((event) =>
-      labels
-        .filter((lbl) => lbl.checked)
-        .map((lbl) => lbl.label)
-        .includes(event.label)
-    );
+    // return savedEvents.filter((event) =>
+    //   labels
+    //     .filter((lbl) => lbl.checked)
+    //     .map((lbl) => lbl.label)
+    //     .includes(event.label)
+    // );
   }, [savedEvents, labels]);
 
   useEffect(() => {
@@ -90,30 +91,10 @@ export default function DataLayer(props) {
   }, [appointments]);
 
   useEffect(() => {
-    setLabels((prevLabels) => {
-      return [...new Set(savedEvents.map((event) => event.label))].map(
-        (label) => {
-          const currentLabel = prevLabels.find(
-            (prevLabel) => prevLabel.label === label
-          );
-          return {
-            label,
-            checked: currentLabel ? currentLabel.checked : true,
-          };
-        }
-      );
-    });
-  }, [savedEvents]);
-
-  useEffect(() => {
     if (smallCalendarMonth !== null) {
       setMonthIndex(smallCalendarMonth);
     }
   }, [smallCalendarMonth]);
-
-  function updateLabels(label) {
-    setLabels(labels.map((lbl) => (lbl.label === label.label ? label : lbl)));
-  }
 
   function updateTypes(type) {
     setTypes(types.map((appType) => (appType.type === type.type ? type : appType)));
@@ -134,9 +115,6 @@ export default function DataLayer(props) {
         dispatchCalEvent,
         selectedEvent,
         setSelectedEvent,
-        setLabels,
-        labels,
-        updateLabels,
         setTypes,
         types,
         updateTypes,
