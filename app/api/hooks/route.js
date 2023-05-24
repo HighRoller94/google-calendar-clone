@@ -1,6 +1,7 @@
 import { SIGNATURE_HEADER_NAME } from "@sanity/webhook";
+import { NextResponse } from 'next/server';
 
-const handler = async (req, res) => {
+export async function GET(req) {
   try {
     const signature = req.headers[SIGNATURE_HEADER_NAME].toString();
     if (
@@ -13,9 +14,9 @@ const handler = async (req, res) => {
       return res.status(401).json({ msg: "Invalid signature" });
     const { slug } = req.body;
     await res.revalidate(`/`);
-    res.status(200).json({ msg: "ok" });
+    return NextResponse("ok")
   } catch (error) {
-    res.status(500).json({ msg: error.message });
+    return NextResponse("not ok")
   }
 };
 
